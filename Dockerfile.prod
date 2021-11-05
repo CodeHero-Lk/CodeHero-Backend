@@ -1,0 +1,19 @@
+FROM node:14-alpine as deps
+
+WORKDIR /app
+
+COPY package*.json .
+
+RUN npm install
+
+FROM node:14-alpine as dev
+
+WORKDIR /app
+
+COPY --from=deps /app/node_modules /node_modules
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["node", "server.js"]
