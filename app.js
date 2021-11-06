@@ -7,7 +7,10 @@ app.use(cors());
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({
+    path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
+});
 
 app.get('/', (req, res, next) => {
     res.send('Hello world');
